@@ -25,13 +25,17 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context) => {
   const id = context.params.pokemonId
 
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+  
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id > 0 ? id : 1}`)
+  
+    const data = await res.json()
+  
+    return {
+      props: { pokemon: data },
+      
+    }  
 
-  const data = await res.json()
 
-  return {
-    props: { pokemon: data },
-  }
 }
 
 export default function Pokemon({ pokemon }) {
